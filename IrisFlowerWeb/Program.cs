@@ -1,24 +1,28 @@
-using IrisFlowerWeb.DataBase;
-using IrisFlowerWeb.Services;
+using Microsoft.Extensions.ML;
+
+using IrisFlowerWeb.Models;
 using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<IrisFlowerContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("IrisFlowerContext") ?? throw new InvalidOperationException("Connection string 'IrisFlowerContext' not found.")));
 
-var services = builder.Services;
-var configuration = builder.Configuration;
 // Add services to the container.
-services.AddRazorPages();
-services.AddDbContextPool<AppDbContext>(options =>
-{
-    options.UseMySql(configuration["ConnectionStrings:MySql"],
-        new MySqlServerVersion(new Version(8, 0, 27)));
-});
+builder.Services.AddRazorPages();
 
-#region  DI
-services.AddScoped<IIrisDataRepository, IrisDataRepository>();
-#endregion
+builder.Services.AddPredictionEnginePool<IrisFlowerData, IrisFlowerPrediction>()
+    .FromFile(
+        modelName: "IrisClusteringModel", 
+        filePath: "MLModels/IrisClusteringModel.zip", 
+        watchForChanges: true);
+
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

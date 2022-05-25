@@ -1,0 +1,61 @@
+@page
+@model IrisFlowerWeb.Pages.IrisFlowers.IndexModel
+
+@{
+    ViewData["Title"] = "数据页";
+}
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IrisFlower[0].SepalLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IrisFlower[0].SepalWidth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IrisFlower[0].PetalLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IrisFlower[0].PetalWidth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IrisFlower[0].FlowerType)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.IrisFlower)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SepalLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SepalWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PetalLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PetalWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlowerType)
+            </td>
+            <td>
+                <a asp-page="./Edit" class="btn btn-primary" asp-route-id="@item.Id">编辑</a>
+                <a asp-page="./Details" class="btn btn-info" asp-route-id="@item.Id">详情</a>
+                <a asp-page="./Delete" class="btn btn-danger" asp-route-id="@item.Id">删除</a>
+            </td>
+        </tr>
+    }
+
+    </tbody>
+</table>
+
+<p class="row justify-content-center">
+    <a class="btn btn-outline-primary" asp-page="Create" style="width: 80px" role="button">添加</a>
+</p>

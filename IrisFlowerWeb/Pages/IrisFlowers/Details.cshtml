@@ -1,0 +1,51 @@
+@page
+@model IrisFlowerWeb.Pages.IrisFlowers.DetailsModel
+
+@{
+    ViewData["Title"] = "详情";
+}
+
+<div>
+    <hr/>
+    <div style="width: 400px; margin: 120px auto">
+        <dl class="row">
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.IrisFlower.SepalLength)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.IrisFlower.SepalLength)
+            </dd>
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.IrisFlower.SepalWidth)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.IrisFlower.SepalWidth)
+            </dd>
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.IrisFlower.PetalLength)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.IrisFlower.PetalLength)
+            </dd>
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.IrisFlower.PetalWidth)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.IrisFlower.PetalWidth)
+            </dd>
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.IrisFlower.FlowerType)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.IrisFlower.FlowerType)
+            </dd>
+
+        </dl>
+        <div style="width: 200px; margin: 0 auto;">
+            <a asp-page="./Edit" asp-route-id="@Model.IrisFlower?.Id" class="btn btn-primary">编辑</a>
+            <a asp-page="./Index" class="btn btn-primary">返回</a>
+        </div>
+    </div>
+
+
+</div>
