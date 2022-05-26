@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.ML.Data;
 
 namespace IrisFlowerWeb.Models;
@@ -5,14 +6,18 @@ namespace IrisFlowerWeb.Models;
 public class IrisFlowerData
 {
     [LoadColumn(0)]
-    public float SepalLength;
+    [Display(Name = "花萼长度")]
+    public float SepalLength { get; set; }
 
     [LoadColumn(1)]
-    public float SepalWidth;
+    [Display(Name = "花萼宽度")]
+    public float SepalWidth { get; set; }
 
     [LoadColumn(2)]
-    public float PetalLength;
+    [Display(Name = "花瓣长度")]
+    public float PetalLength { get; set; }
 
     [LoadColumn(3)]
-    public float PetalWidth;
+    [Display(Name = "花瓣宽度")]
+    public float PetalWidth { get; set; }
 }

@@ -19,34 +19,22 @@ public class IndexModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)] public IrisFlowerData IrisFlowerData { get; set; } = default!;
-    public IrisFlowerPrediction IrisFlowerPrediction { get; set; } = default!;
+    public IrisFlowerPrediction IrisFlowerPrediction { get; set; }
+    public IrisFlower IrisFlower { get; set; }
+
     public async Task<IActionResult> OnGetAsync()
     {
-        if (!ModelState.IsValid)
+        if (IrisFlowerData.PetalLength == 0 && IrisFlowerData.SepalLength == 0 || IrisFlowerData == null)
         {
             return Page();
         }
+
+        if (!ModelState.IsValid) return Page();
 
         IrisFlowerPrediction =
             _predictionEnginePool.Predict(modelName: "IrisClusteringModel", example: IrisFlowerData);
-        return Page();
-    }
-
-    public IrisType GetFlowerType(IrisFlowerPrediction irisFlowerPrediction)
-        => irisFlowerPrediction.PredictedClusterId switch
-        {
-            1 => IrisType.Setosa,
-            2 => IrisType.Versicolor,
-            3 => IrisType.Virginnica
-        };
-    public async Task<IActionResult> OnPostAsync()
-    {
-        if (!ModelState.IsValid || _context.IrisFlower == null || IrisFlowerData == null || IrisFlowerPrediction == null)
-        {
-            return Page();
-        }
-
-        IrisFlower irisFlower = new IrisFlower
+        
+        IrisFlower = new IrisFlower
         {
             SepalLength = IrisFlowerData.SepalLength,
             SepalWidth = IrisFlowerData.SepalWidth,
@@ -54,9 +42,27 @@ public class IndexModel : PageModel
             PetalWidth = IrisFlowerData.PetalWidth,
             FlowerType = GetFlowerType(IrisFlowerPrediction)
         };
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid || IrisFlower == null)
+        {
+            return Page();
+        }
         
-        _context.IrisFlower.AddAsync(irisFlower);
+        _context.IrisFlower.AddAsync(IrisFlower);
         _context.SaveChangesAsync();
         return Page();
     }
+
+    public IrisType GetFlowerType(IrisFlowerPrediction irisFlowerPrediction)
+        => irisFlowerPrediction.PredictedClusterId switch
+        {
+            1 => IrisType.Setosa,
+            3 => IrisType.Versicolor,
+            2 => IrisType.Virginnica
+        };
+    
 }
