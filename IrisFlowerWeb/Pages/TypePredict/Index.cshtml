@@ -3,18 +3,8 @@
 @model IrisFlowerWeb.Pages.TypePredict.IndexModel
 
 <div style="width: 350px; margin: 100px auto">
-    <form method="get">
+    <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="IrisFlowerData.PetalLength" class="control-label"></label>
-            <input asp-for="IrisFlowerData.PetalLength" class="form-control"/>
-            <span asp-validation-for="IrisFlowerData.PetalLength" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="IrisFlowerData.PetalWidth" class="control-label"></label>
-            <input asp-for="IrisFlowerData.PetalWidth" class="form-control"/>
-            <span asp-validation-for="IrisFlowerData.PetalWidth" class="text-danger"></span>
-        </div>
         <div class="form-group">
             <label asp-for="IrisFlowerData.SepalLength" class="control-label"></label>
             <input asp-for="IrisFlowerData.SepalLength" class="form-control"/>
@@ -25,6 +15,18 @@
             <input asp-for="IrisFlowerData.SepalWidth" class="form-control"/>
             <span asp-validation-for="IrisFlowerData.SepalWidth" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <label asp-for="IrisFlowerData.PetalLength" class="control-label"></label>
+            <input asp-for="IrisFlowerData.PetalLength" class="form-control"/>
+            <span asp-validation-for="IrisFlowerData.PetalLength" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="IrisFlowerData.PetalWidth" class="control-label"></label>
+            <input asp-for="IrisFlowerData.PetalWidth" class="form-control"/>
+            <span asp-validation-for="IrisFlowerData.PetalWidth" class="text-danger"></span>
+        </div>
+
+        <hr>
         <dl class="row">
             <dt class="col-sm-6">@Html.DisplayNameFor(model => model.IrisFlower.FlowerType)</dt>
             <dt class="col-sm-6">@Html.DisplayFor(model => model.IrisFlower.FlowerType)</dt>
@@ -33,10 +35,6 @@
             <button type="submit" class="btn btn-primary">预测</button>
         </div>
     </form>
-    <form method="post">
-        <button type="submit" class="btn btn-primary">保存</button>
-    </form>
-
 </div>
 
 @section Scripts {

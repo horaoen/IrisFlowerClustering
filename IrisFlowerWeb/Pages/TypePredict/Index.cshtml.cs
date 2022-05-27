@@ -18,13 +18,14 @@ public class IndexModel : PageModel
         _predictionEnginePool = predictionEnginePool;
     }
 
-    [BindProperty(SupportsGet = true)] public IrisFlowerData IrisFlowerData { get; set; } = default!;
+    [BindProperty] 
+    public IrisFlowerData IrisFlowerData { get; set; }
     public IrisFlowerPrediction IrisFlowerPrediction { get; set; }
     public IrisFlower IrisFlower { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnPostAsync()
     {
-        if (IrisFlowerData.PetalLength == 0 && IrisFlowerData.SepalLength == 0 || IrisFlowerData == null)
+        if (IrisFlowerData == null)
         {
             return Page();
         }
@@ -42,18 +43,13 @@ public class IndexModel : PageModel
             PetalWidth = IrisFlowerData.PetalWidth,
             FlowerType = GetFlowerType(IrisFlowerPrediction)
         };
+        _context.IrisFlower.AddAsync(IrisFlower);
+        _context.SaveChangesAsync();
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
-        if (!ModelState.IsValid || IrisFlower == null)
-        {
-            return Page();
-        }
-        
-        _context.IrisFlower.AddAsync(IrisFlower);
-        _context.SaveChangesAsync();
         return Page();
     }
 
