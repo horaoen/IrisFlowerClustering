@@ -56,9 +56,9 @@ public class IndexModel : PageModel
     public IrisType GetFlowerType(IrisFlowerPrediction irisFlowerPrediction)
         => irisFlowerPrediction.PredictedClusterId switch
         {
-            1 => IrisType.Setosa,
-            3 => IrisType.Versicolor,
-            2 => IrisType.Virginnica
+            2 => IrisType.Setosa,
+            1 => IrisType.Versicolor,
+            3 => IrisType.Virginnica
         };
     
 }
